@@ -18,7 +18,6 @@ public class ResizeBox : MonoBehaviour {
 		count = count + 1;
 		z = 0.5f * Mathf.Sin (count / 20); 
 		float deltaZ = z - previousZ;
-		Debug.Log ("Z: " + z + " deltaZ: " + deltaZ);
 		previousZ = z;
 		transform.Translate (new Vector3 (deltaZ, deltaZ, deltaZ));
 	}
