@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class AddGraph : MonoBehaviour {
 
-	public GameObject GraphManagerObject;
+	public GameObject GraphPositioner;
+
 	public void AddGraphButtonHandler()
 	{
-		GraphManager graphManager = GraphManagerObject.GetComponent<GraphManager> ();
+		// Create a new axis for placing a graph
+		Instantiate (GraphPositioner);
 
-		if (graphManager == null) {
-			Debug.Log ("Unable to retrieve the graph manager from the scene");
+		IDataProcessor dataProcessor = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
+
+		IDataProvider dataProvider = GetComponent<DataProvider> () as DataProvider;
+
+		if (dataProvider == null) {
+			Debug.Log ("Unable to get the data provider");
 			return;
 		}
 
-		graphManager.AddNewGraph ();
+		IList<ITraceDescriptor> availableTraces = dataProvider.AvailableTraces;
+
+		//Hard coded registering for 3 time traces
+		dataProvider.RegisterForData (availableTraces[0], dataProcessor);
+		dataProvider.RegisterForData (availableTraces[2], dataProcessor);
+		dataProvider.RegisterForData (availableTraces[4], dataProcessor);
+
 	}
 }
