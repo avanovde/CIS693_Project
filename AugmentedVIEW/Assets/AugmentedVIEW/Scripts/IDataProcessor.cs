@@ -1,5 +1,5 @@
 ﻿public interface IDataProcessor
 {
-	void DataUpdated(int channel, float newData);
+	void DataUpdated(ITraceDescriptor channel, float newData);
 }
 

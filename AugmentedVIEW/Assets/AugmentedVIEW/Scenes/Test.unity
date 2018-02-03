@@ -398,7 +398,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d7af84ab62b4d7392893d9744756df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraphManagerObject: {fileID: 822599901}
+  GraphPositioner: {fileID: 1817218605669806, guid: e186f3c14e06d4a9299b3b95293ac26c,
+    type: 2}
 --- !u!1 &522056296
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,11 +656,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 822599901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd8e44077ee54c06bd2e09bba2036ac, type: 3}
+  m_Script: {fileID: 11500000, guid: b42e3f5bca24b46618a2f6a717b9ab58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraphPositioner: {fileID: 1817218605669806, guid: e186f3c14e06d4a9299b3b95293ac26c,
-    type: 2}
 --- !u!4 &822599903
 Transform:
   m_ObjectHideFlags: 0
@@ -856,7 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58ecea7a196242dd879c814ac05084c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ClearMaterial: {fileID: 2100000, guid: 2081057c5ab9b4b20a1a1c4efdace299, type: 2}
+  m_ClearMaterial: {fileID: 2100000, guid: f1d9352050a75486f878ab19fa578f16, type: 2}
 --- !u!92 &1160991947
 Behaviour:
   m_ObjectHideFlags: 0
@@ -987,7 +986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

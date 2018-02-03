@@ -11,7 +11,7 @@ public class AddGraph : MonoBehaviour {
 		// Create a new axis for placing a graph
 		Instantiate (GraphPositioner);
 
-		IDataProcessor dataProcessor = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
+		//GameObject positioner = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
 
 		IDataProvider dataProvider = GetComponent<DataProvider> () as DataProvider;
 
@@ -23,9 +23,9 @@ public class AddGraph : MonoBehaviour {
 		IList<ITraceDescriptor> availableTraces = dataProvider.AvailableTraces;
 
 		//Hard coded registering for 3 time traces
-		dataProvider.RegisterForData (availableTraces[0], dataProcessor);
-		dataProvider.RegisterForData (availableTraces[2], dataProcessor);
-		dataProvider.RegisterForData (availableTraces[4], dataProcessor);
+		//dataProvider.RegisterForData (availableTraces[0], dataProcessor);
+		//dataProvider.RegisterForData (availableTraces[2], dataProcessor);
+		//dataProvider.RegisterForData (availableTraces[4], dataProcessor);
 
 	}
 }
