@@ -26,12 +26,18 @@ public class BaseAxisModel : MonoBehaviour
 			break;
 		case AxisState.Selected:
 			// Update the location of the axis object
-			transform.position = mainCamera.transform.position + mainCamera.transform.forward * DistanceFromCamera;
-			transform.rotation = mainCamera.transform.rotation;
+//			transform.position = mainCamera.transform.position + mainCamera.transform.forward * DistanceFromCamera;
+//			transform.rotation = mainCamera.transform.rotation;
 			break;
 		default:
 			Debug.Assert(false, "Unknown State");
 			break;
+		}
+	}
+
+	void OnCollisionEnter(Collision collision) {
+		foreach (ContactPoint contact in collision.contacts) {
+			Debug.DrawRay (contact.point, contact.normal, Color.yellow, 2, false);
 		}
 	}
 }

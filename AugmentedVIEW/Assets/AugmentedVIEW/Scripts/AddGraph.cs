@@ -8,8 +8,10 @@ public class AddGraph : MonoBehaviour {
 
 	public void AddGraphButtonHandler()
 	{
+		Vector3 cameraPosition = Camera.main.transform.position;
+		Quaternion orientation = Camera.main.transform.rotation;
 		// Create a new axis for placing a graph
-		Instantiate (GraphPositioner);
+		Instantiate (GraphPositioner, cameraPosition, orientation);
 
 		//GameObject positioner = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
 

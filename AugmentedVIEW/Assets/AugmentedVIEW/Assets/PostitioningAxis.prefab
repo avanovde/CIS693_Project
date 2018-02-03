@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23884676168891958}
   m_Layer: 0
   m_Name: Z
-  m_TagString: Untagged
+  m_TagString: GraphPositioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23494053915025350}
   m_Layer: 0
   m_Name: Center
-  m_TagString: Untagged
+  m_TagString: GraphPositioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 23635347372475920}
   m_Layer: 0
   m_Name: Y
-  m_TagString: Untagged
+  m_TagString: GraphPositioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,9 +74,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4389956954063256}
   - component: {fileID: 114604565162238464}
+  - component: {fileID: 65394945620785712}
   m_Layer: 0
   m_Name: PostitioningAxis
-  m_TagString: Untagged
+  m_TagString: GraphPositioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +95,7 @@ GameObject:
   - component: {fileID: 23955029201113340}
   m_Layer: 0
   m_Name: X
-  m_TagString: Untagged
+  m_TagString: GraphPositioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,6 +345,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65394945620785712
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1817218605669806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.5, y: 0.5, z: -0.5}
 --- !u!65 &65415423020805458
 BoxCollider:
   m_ObjectHideFlags: 1
