@@ -20,29 +20,17 @@ public class BaseAxisModel : MonoBehaviour
 
 	void Update()
 	{
-//		if (Input.GetMouseButtonDown(0)) {
-//			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//			RaycastHit raycastHit;
-//
-//			Debug.DrawRay(ray.origin, ray.direction, Color.white, 1, false);
-//			if (Physics.Raycast(ray, out raycastHit, 30f)) {
-//				Debug.Log("User pressed the " + raycastHit.collider.gameObject.name + " object");
-//				if (raycastHit.collider.gameObject.name == "GraphPositioner") {
-//					Debug.Log("Placing graph positioner");
-
-//
-//				}
-//			}
-//		}
-
-
 		switch (CurrentAxisState) 
 		{
 		case AxisState.Locked:
 			break;
 		case AxisState.Selected:
 			// Update the location of the axis object
-			transform.position = mainCamera.transform.position + mainCamera.transform.forward * DistanceFromCamera;
+			var cameraTransform = mainCamera.transform;
+			var cameraPosition = cameraTransform.position;
+
+			transform.position = (cameraPosition + cameraTransform.forward * DistanceFromCamera);
+			transform.position = (transform.position + transform.up * -.02f);
 			transform.rotation = mainCamera.transform.rotation;
 			break;
 		default:
@@ -51,6 +39,10 @@ public class BaseAxisModel : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Toggles the locking state of a positioner.  That way it can follow the
+	/// camera, or stay at a fixed location.
+	/// </summary>
 	public void ToggleState() {
 		if (CurrentAxisState == AxisState.Selected) {
 			CurrentAxisState = AxisState.Locked;
