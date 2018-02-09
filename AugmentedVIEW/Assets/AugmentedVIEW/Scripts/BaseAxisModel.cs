@@ -20,14 +20,30 @@ public class BaseAxisModel : MonoBehaviour
 
 	void Update()
 	{
+//		if (Input.GetMouseButtonDown(0)) {
+//			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+//			RaycastHit raycastHit;
+//
+//			Debug.DrawRay(ray.origin, ray.direction, Color.white, 1, false);
+//			if (Physics.Raycast(ray, out raycastHit, 30f)) {
+//				Debug.Log("User pressed the " + raycastHit.collider.gameObject.name + " object");
+//				if (raycastHit.collider.gameObject.name == "GraphPositioner") {
+//					Debug.Log("Placing graph positioner");
+
+//
+//				}
+//			}
+//		}
+
+
 		switch (CurrentAxisState) 
 		{
 		case AxisState.Locked:
 			break;
 		case AxisState.Selected:
 			// Update the location of the axis object
-//			transform.position = mainCamera.transform.position + mainCamera.transform.forward * DistanceFromCamera;
-//			transform.rotation = mainCamera.transform.rotation;
+			transform.position = mainCamera.transform.position + mainCamera.transform.forward * DistanceFromCamera;
+			transform.rotation = mainCamera.transform.rotation;
 			break;
 		default:
 			Debug.Assert(false, "Unknown State");
@@ -35,9 +51,16 @@ public class BaseAxisModel : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter(Collision collision) {
-		foreach (ContactPoint contact in collision.contacts) {
-			Debug.DrawRay (contact.point, contact.normal, Color.yellow, 2, false);
+	public void ToggleState() {
+		if (CurrentAxisState == AxisState.Selected) {
+			CurrentAxisState = AxisState.Locked;
+			Debug.Log ("Locking the graph positioner location");
+			return;
+		}
+		if (CurrentAxisState == AxisState.Locked) {
+			CurrentAxisState = AxisState.Selected;
+			Debug.Log ("Unlocking the graph positioner location");
+			return;
 		}
 	}
 }

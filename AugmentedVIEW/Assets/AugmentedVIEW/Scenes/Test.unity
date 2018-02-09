@@ -152,10 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 1397188705488210, guid: e186f3c14e06d4a9299b3b95293ac26c, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1817218605669806, guid: e186f3c14e06d4a9299b3b95293ac26c, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -292,8 +288,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 30}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 150, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &404889985
 MonoBehaviour:
@@ -402,8 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d7af84ab62b4d7392893d9744756df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraphPositioner: {fileID: 1817218605669806, guid: e186f3c14e06d4a9299b3b95293ac26c,
-    type: 2}
+  Prefab: {fileID: 1817218605669806, guid: e186f3c14e06d4a9299b3b95293ac26c, type: 2}
 --- !u!1 &522056296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1016,7 @@ GameObject:
   - component: {fileID: 1984380173}
   - component: {fileID: 1984380174}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TouchController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1051,3 +1046,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261b50c874e6c4b81b078eb46e321f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HitTransform: {fileID: 0}
+  maxRayDistance: 30
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1024

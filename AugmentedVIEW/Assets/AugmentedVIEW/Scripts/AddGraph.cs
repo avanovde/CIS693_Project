@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class AddGraph : MonoBehaviour {
 
-	public GameObject GraphPositioner;
+	public GameObject Prefab;
+
+	private GameObject _graphPositioner;
 
 	public void AddGraphButtonHandler()
 	{
 		Vector3 cameraPosition = Camera.main.transform.position;
 		Quaternion orientation = Camera.main.transform.rotation;
 		// Create a new axis for placing a graph
-		Instantiate (GraphPositioner, cameraPosition, orientation);
+		_graphPositioner = Instantiate (Prefab, cameraPosition, orientation) as GameObject;
+		_graphPositioner.name = "GraphPositioner";
+		_graphPositioner.SetActive (true); // Make sure it is turned on
 
 		//GameObject positioner = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
 
