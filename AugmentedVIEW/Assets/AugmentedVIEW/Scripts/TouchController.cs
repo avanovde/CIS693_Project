@@ -35,7 +35,6 @@ public class TouchController : MonoBehaviour {
 			if (Physics.Raycast(ray, out raycastHit, maxRayDistance)) {
 				Debug.Log("User pressed the " + raycastHit.collider.gameObject.name + " object");
 				if (raycastHit.collider.name == "GraphPositioner") {
-					Debug.Log("Placing graph positioner");
 					var positionerObject = raycastHit.collider.gameObject;
 					BaseAxisModel positioner = positionerObject.GetComponent<BaseAxisModel> ();
 					if (positioner == null) {

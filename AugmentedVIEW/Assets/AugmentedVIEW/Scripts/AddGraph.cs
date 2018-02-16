@@ -5,33 +5,42 @@ using UnityEngine;
 public class AddGraph : MonoBehaviour {
 
 	public GameObject Prefab;
+	public GameObject GraphPrefab;
 
 	private GameObject _graphPositioner;
 
 	public void AddGraphButtonHandler()
 	{
-		Vector3 cameraPosition = Camera.main.transform.position;
-		Quaternion orientation = Camera.main.transform.rotation;
-		// Create a new axis for placing a graph
-		_graphPositioner = Instantiate (Prefab, cameraPosition, orientation) as GameObject;
-		_graphPositioner.name = "GraphPositioner";
-		_graphPositioner.SetActive (true); // Make sure it is turned on
+		// First try get the data provider, before doing any more work
+		GameObject providerObject = GameObject.Find("DataProvider");
+		if (providerObject == null) {
+			Debug.Log ("Unable to find the game object named data provider");
+			return;
+		}
 
-		//GameObject positioner = GraphPositioner.GetComponent<ResizeBox>() as ResizeBox;
-
-		IDataProvider dataProvider = GetComponent<DataProvider> () as DataProvider;
+		IDataProvider dataProvider = providerObject.GetComponent<DataProvider> ();
 
 		if (dataProvider == null) {
 			Debug.Log ("Unable to get the data provider");
 			return;
 		}
 
+		Vector3 cameraPosition = Camera.main.transform.position;
+		Quaternion orientation = Camera.main.transform.rotation;
+
+		// Create a new axis for placing a graph
+		_graphPositioner = Instantiate (Prefab) as GameObject;
+		_graphPositioner.name = "GraphPositioner";
+		_graphPositioner.SetActive (true); // Make sure it is turned on
+
+		// Pass the data provider to the positioner, to give to the graph
+		BaseAxisModel positionerScript = _graphPositioner.GetComponent<BaseAxisModel> ();
+		if (positionerScript == null) {
+			Debug.Log ("Unable to get the BaseAxisModel script from the positioner");
+			return;
+		}
+		positionerScript.SetGraphType (GraphPrefab);
+
 		IList<ITraceDescriptor> availableTraces = dataProvider.AvailableTraces;
-
-		//Hard coded registering for 3 time traces
-		//dataProvider.RegisterForData (availableTraces[0], dataProcessor);
-		//dataProvider.RegisterForData (availableTraces[2], dataProcessor);
-		//dataProvider.RegisterForData (availableTraces[4], dataProcessor);
-
 	}
 }
