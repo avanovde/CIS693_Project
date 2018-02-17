@@ -40,7 +40,6 @@ public class AddGraph : MonoBehaviour {
 			return;
 		}
 		positionerScript.SetGraphType (GraphPrefab);
-
-		IList<ITraceDescriptor> availableTraces = dataProvider.AvailableTraces;
+		positionerScript.UpdateDataProvider (dataProvider);
 	}
 }

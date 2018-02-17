@@ -109,5 +109,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5982a7c85b4de5b26f20f6b52ad33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceFromCamera: 0.05
-  DistanceBelowCamera: 0.01
+  DistanceFromCamera: 0.3
+  DistanceBelowCamera: 0.08

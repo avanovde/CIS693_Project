@@ -42,7 +42,8 @@ public class BaseAxisModel : MonoBehaviour
 
 			transform.position = (cameraPosition + cameraTransform.forward * DistanceFromCamera);
 			transform.position = (transform.position + transform.up * DistanceBelowCamera * -1);
-//			transform.rotation = mainCamera.transform.rotation;
+
+			transform.rotation = mainCamera.transform.rotation;
 			break;
 		default:
 			Debug.Assert(false, "Unknown State");
@@ -55,38 +56,38 @@ public class BaseAxisModel : MonoBehaviour
 	/// camera, or stay at a fixed location.
 	/// </summary>
 	public void ToggleState() {
-//		if (_currentAxisState == AxisState.Selected) {
-//			_currentAxisState = AxisState.Locked;
-//			var arInterface = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
-//			AnchorID = arInterface.AddUserAnchorFromGameObject (this.gameObject).identifierStr;
-//
-//			// Create and setup the new graph
-//			_currentGraph = Instantiate (_graphType);
-//			_currentGraph.SetActive (true);
-//			var graphScript = _currentGraph.GetComponent<ResizeBox> ();
-//
-//			// Register the graph to receive data updates from the provider
-//			// Sometime we will need to change this to let the user choose, and not hard code
-//			var availableTraces = _dataProvider.AvailableTraces;
-//			graphScript.XTraceDescriptor = availableTraces [0];
-//			graphScript.YTraceDescriptor = availableTraces [1];
-//			graphScript.YTraceDescriptor = availableTraces [2];
-//			_dataProvider.RegisterForData (availableTraces [0], graphScript);
-//			_dataProvider.RegisterForData (availableTraces [1], graphScript);
-//			_dataProvider.RegisterForData (availableTraces [2], graphScript);
-//			
-//			// Turn off the positioning axes
-//			gameObject.SetActive(false);
-//			return;
-//		}
-//		if (_currentAxisState == AxisState.Locked) {
-//			_currentAxisState = AxisState.Selected;
-//			if (!AnchorID.Equals ("")) {
-//				UnityARSessionNativeInterface.GetARSessionNativeInterface ().RemoveUserAnchor (AnchorID);
-//				AnchorID = "";
-//			}
-//			return;
-//		}
+		if (_currentAxisState == AxisState.Selected) {
+			_currentAxisState = AxisState.Locked;
+			var arInterface = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
+			AnchorID = arInterface.AddUserAnchorFromGameObject (this.gameObject).identifierStr;
+
+			// Create and setup the new graph
+			_currentGraph = Instantiate (_graphType);
+			_currentGraph.SetActive (true);
+			var graphScript = _currentGraph.GetComponent<ResizeBox> ();
+
+			// Register the graph to receive data updates from the provider
+			// Sometime we will need to change this to let the user choose, and not hard code
+			var availableTraces = _dataProvider.AvailableTraces;
+			graphScript.XTraceDescriptor = availableTraces [0];
+			graphScript.YTraceDescriptor = availableTraces [1];
+			graphScript.YTraceDescriptor = availableTraces [2];
+			_dataProvider.RegisterForData (availableTraces [0], graphScript);
+			_dataProvider.RegisterForData (availableTraces [1], graphScript);
+			_dataProvider.RegisterForData (availableTraces [2], graphScript);
+			
+			// Turn off the positioning axes
+			gameObject.SetActive(false);
+			return;
+		}
+		if (_currentAxisState == AxisState.Locked) {
+			_currentAxisState = AxisState.Selected;
+			if (!AnchorID.Equals ("")) {
+				UnityARSessionNativeInterface.GetARSessionNativeInterface ().RemoveUserAnchor (AnchorID);
+				AnchorID = "";
+			}
+			return;
+		}
 	}
 
 	/// <summary>
