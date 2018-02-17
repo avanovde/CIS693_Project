@@ -19,6 +19,10 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	private float _yValue;
 	private float _zValue;
 
+	public bool GraphPositioned = false;
+
+
+
 	// Use this for initialization
 	void Start () {
 	}

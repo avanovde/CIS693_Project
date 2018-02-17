@@ -56,6 +56,7 @@
      <Compile Include="Assets\AugmentedVIEW\Scripts\BaseAxisModel.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataType.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\GraphManager.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProcessor.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ITraceDescriptor.cs" />

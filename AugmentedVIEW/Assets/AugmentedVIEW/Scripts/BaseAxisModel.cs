@@ -63,8 +63,10 @@ public class BaseAxisModel : MonoBehaviour
 
 			// Create and setup the new graph
 			_currentGraph = Instantiate (_graphType);
-			_currentGraph.SetActive (true);
+			var graphManager = _currentGraph.GetComponent<GraphManager> ();
 			var graphScript = _currentGraph.GetComponent<ResizeBox> ();
+
+			graphManager.TargetPosition = transform.position;
 
 			// Register the graph to receive data updates from the provider
 			// Sometime we will need to change this to let the user choose, and not hard code
@@ -78,6 +80,8 @@ public class BaseAxisModel : MonoBehaviour
 			
 			// Turn off the positioning axes
 			gameObject.SetActive(false);
+			// Turn on the graph
+			_currentGraph.SetActive(true);
 			return;
 		}
 		if (_currentAxisState == AxisState.Locked) {
