@@ -61,6 +61,7 @@
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ITraceDescriptor.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ResizeBox.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\ToggleGameObjectVisibility.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\TouchController.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\TraceDescriptor.cs" />
      <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ARKitFaceTrackingRemoteConnection.cs" />
