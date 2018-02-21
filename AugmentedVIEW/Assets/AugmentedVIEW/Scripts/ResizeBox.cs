@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ResizeBox : MonoBehaviour, IDataProcessor
 {
@@ -22,9 +23,9 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	public bool GraphPositioned = false;
 
 
-
 	// Use this for initialization
 	void Start () {
+		
 	}
 	
 	// Update is called once per frame
@@ -44,7 +45,7 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 		ITraceDescriptor traceDescriptor,
 		float newData)
 	{
-		Debug.Log ("Data (" + newData + ") updated on channel " + traceDescriptor.Channel);
+		//Debug.Log ("Data (" + newData + ") updated on channel " + traceDescriptor.Channel);
 		if (traceDescriptor.Equals(XTraceDescriptor)) {
 			_previousXValue = _xValue;
 			_xValue = newData;

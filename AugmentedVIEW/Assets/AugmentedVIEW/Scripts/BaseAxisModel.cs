@@ -77,7 +77,7 @@ public class BaseAxisModel : MonoBehaviour
 			_dataProvider.RegisterForData (availableTraces [0], graphScript);
 			_dataProvider.RegisterForData (availableTraces [1], graphScript);
 			_dataProvider.RegisterForData (availableTraces [2], graphScript);
-			
+
 			// Turn off the positioning axes
 			gameObject.SetActive(false);
 			// Turn on the graph
