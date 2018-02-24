@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GraphPositioner
+  - Graph
   layers:
   - Default
   - TransparentFX

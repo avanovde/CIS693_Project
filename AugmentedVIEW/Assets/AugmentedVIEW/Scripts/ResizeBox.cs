@@ -45,7 +45,7 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 		ITraceDescriptor traceDescriptor,
 		float newData)
 	{
-		//Debug.Log ("Data (" + newData + ") updated on channel " + traceDescriptor.Channel);
+		Debug.Log ("Data (" + newData + ") updated on channel " + traceDescriptor.Channel);
 		if (traceDescriptor.Equals(XTraceDescriptor)) {
 			_previousXValue = _xValue;
 			_xValue = newData;

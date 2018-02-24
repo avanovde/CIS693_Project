@@ -1,24 +1,20 @@
 ﻿public class TraceDescriptor : ITraceDescriptor
 {
-	private int _channel;
-	private DataType _dataType;
 	public TraceDescriptor (
 		int channel,
 		DataType dataType)
 	{
-		_channel = channel;
-		_dataType = dataType;
-	}
-	#region ITraceDescriptor implementation
-	int Channel 
-	{
-		get { return _channel; }
+		Channel = channel;
+		TraceDataType = dataType;
 	}
 
-	DataType DataType 
-	{ 
-		get { return _dataType; }
-	}
+	#region ITraceDescriptor implementation
+
+	// Index of the channel on the IOBox
+	public int Channel { get; }
+	// Type of data belonging to the particular trace
+	public DataType TraceDataType { get; }
+
 	#endregion
 }
 

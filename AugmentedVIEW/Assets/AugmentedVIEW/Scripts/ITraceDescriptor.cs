@@ -1,8 +1,8 @@
-﻿public class ITraceDescriptor
+﻿public interface ITraceDescriptor
 {
 	// Channel index of the trace on the IO Box
-	public int Channel { get; }
+	int Channel { get; }
 	// Type of data the descriptor is associated with
-	public DataType DataType { get; }
+	DataType TraceDataType { get; }
 }
 
