@@ -30,16 +30,16 @@ public class AddGraph : MonoBehaviour {
 
 		// Create a new axis for placing a graph
 		_graphPositioner = Instantiate (Prefab) as GameObject;
-		_graphPositioner.name = "GraphPositioner";
+		_graphPositioner.name = "Positioner";
 		_graphPositioner.SetActive (true); // Make sure it is turned on
 
 		// Pass the data provider to the positioner, to give to the graph
-		BaseAxisModel positionerScript = _graphPositioner.GetComponent<BaseAxisModel> ();
+		GraphPositioner positionerScript = _graphPositioner.GetComponent<GraphPositioner> ();
 		if (positionerScript == null) {
 			Debug.Log ("Unable to get the BaseAxisModel script from the positioner");
 			return;
 		}
-		positionerScript.SetGraphType (GraphPrefab);
-		positionerScript.UpdateDataProvider (dataProvider);
+		positionerScript.GraphPrefab = GraphPrefab;
+		positionerScript.DataProvider = dataProvider;
 	}
 }

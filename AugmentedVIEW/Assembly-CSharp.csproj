@@ -53,17 +53,17 @@
   <ItemGroup>
      <Compile Include="Assets\AugmentedVIEW\Scripts\AddGraph.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\Axis.cs" />
-     <Compile Include="Assets\AugmentedVIEW\Scripts\BaseAxisModel.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataType.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\GraphManager.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\GraphPositioner.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProcessor.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ITraceDescriptor.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ResizeBox.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ToggleGameObjectVisibility.cs" />
-     <Compile Include="Assets\AugmentedVIEW\Scripts\TouchController.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\TraceDescriptor.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\UnityARGeneratePlane.cs" />
      <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ARKitFaceTrackingRemoteConnection.cs" />
      <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ARKitRemoteConnection.cs" />
      <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ConnectionMessageIds.cs" />
