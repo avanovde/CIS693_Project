@@ -216,7 +216,7 @@ public class GraphPositioner : MonoBehaviour
 		// Create and setup the new graph
 		_graph = Instantiate (GraphPrefab);
 		var graphManager = _graph.GetComponent<GraphManager> ();
-		var graphScript = _graph.GetComponent<ResizeBox> ();
+		var graphScript = _graph.GetComponentInChildren(typeof(ResizeBox)) as ResizeBox;
 
 		graphManager.TargetPosition = transform.position;
 
@@ -225,7 +225,7 @@ public class GraphPositioner : MonoBehaviour
 		var availableTraces = DataProvider.AvailableTraces;
 		graphScript.XTraceDescriptor = availableTraces [0];
 		graphScript.YTraceDescriptor = availableTraces [1];
-		graphScript.YTraceDescriptor = availableTraces [2];
+		graphScript.ZTraceDescriptor = availableTraces [2];
 		DataProvider.RegisterForData (availableTraces [0], graphScript);
 		DataProvider.RegisterForData (availableTraces [1], graphScript);
 		DataProvider.RegisterForData (availableTraces [2], graphScript);

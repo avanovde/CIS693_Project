@@ -5,6 +5,8 @@ using System;
 
 public class ResizeBox : MonoBehaviour, IDataProcessor
 {
+	public float GraphScaleFactor = 0.5f;
+	public float Speed = 1.0f;
 
 	public ITraceDescriptor XTraceDescriptor;
 	public ITraceDescriptor YTraceDescriptor;
@@ -22,21 +24,21 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 
 	public bool GraphPositioned = false;
 
+	private Vector3 _currentPosition;
+	private Vector3 _targetPosition;
+
 
 	// Use this for initialization
 	void Start () {
-		
+		_currentPosition = transform.position;
+		_targetPosition = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		float deltaX = _previousXValue - _xValue;
-		float deltaY = _previousYValue - _yValue;
-		float deltaZ = _previousZValue - _zValue;
-
-		if (deltaX != 0f || deltaY != 0 || deltaZ != 0)
-			transform.Translate (new Vector3 (deltaX, deltaY, deltaZ));
+		float graphMoveFactor = Time.deltaTime * Speed;
+		//Debug.Log ("Current: " + _currentPosition + " Target: " + _targetPosition);
+		Vector3.Lerp (_currentPosition, _targetPosition, graphMoveFactor);
 	}
 
 	#region IDataProcessor implementation
@@ -45,19 +47,31 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 		ITraceDescriptor traceDescriptor,
 		float newData)
 	{
-		Debug.Log ("Data (" + newData + ") updated on channel " + traceDescriptor.Channel);
-		if (traceDescriptor.Equals(XTraceDescriptor)) {
+		if (traceDescriptor.Channel == XTraceDescriptor.Channel) {
+			//Debug.Log ("X: " + newData);
 			_previousXValue = _xValue;
-			_xValue = newData;
-		} else if (traceDescriptor.Equals(YTraceDescriptor)) {
+			_xValue = newData * GraphScaleFactor;
+		} else if (traceDescriptor.Channel == YTraceDescriptor.Channel) {
+			//Debug.Log ("Y: " + newData);
 			_previousYValue = _yValue;
-			_yValue = newData;
-		} else if (traceDescriptor.Equals(ZTraceDescriptor)) {
+			_yValue = newData * GraphScaleFactor;
+		} else if (traceDescriptor.Channel == ZTraceDescriptor.Channel) {
+			//Debug.Log ("Z: " + newData);
 			_previousZValue = _zValue;
-			_zValue = newData;
+			_zValue = newData * GraphScaleFactor;
 		} else {
-			Debug.Log("Unused trace descriptor applied to Resize Box");
+			Debug.Log ("Unused trace descriptor applied to resize box");
+			return;
 		}
+
+		float deltaX = _previousXValue - _xValue;
+		float deltaY = _previousYValue - _yValue;
+		float deltaZ = _previousZValue - _zValue;
+
+		_currentPosition = transform.position;
+
+		if (deltaX != 0f || deltaY != 0 || deltaZ != 0)
+			_targetPosition = new Vector3 (deltaX, deltaY, deltaZ);
 	}
 
 	#endregion

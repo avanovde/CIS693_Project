@@ -1061,14 +1061,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 4900977620624710, guid: 9fff7543594794173a1b75ea69bea315, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4900977620624710, guid: 9fff7543594794173a1b75ea69bea315, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.17
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fff7543594794173a1b75ea69bea315, type: 2}
   m_IsPrefabParent: 0
@@ -1179,6 +1171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42e3f5bca24b46618a2f6a717b9ab58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UpdateScaleFactor: 5
 --- !u!4 &822599903
 Transform:
   m_ObjectHideFlags: 0
@@ -1208,7 +1201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &880611210
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1933,7 +1926,18 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 185500998}
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1

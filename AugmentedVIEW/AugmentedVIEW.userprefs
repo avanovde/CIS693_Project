@@ -2,16 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AugmentedVIEW/Scripts/GraphPositioner.cs">
     <Files>
-      <File FileName="Assets/AugmentedVIEW/Scripts/UnityARGeneratePlane.cs" Line="1" Column="1" />
-      <File FileName="Assets/AugmentedVIEW/Scripts/AddGraph.cs" Line="15" Column="1" />
-      <File FileName="Assets/AugmentedVIEW/Scripts/GraphPositioner.cs" Line="134" Column="42" />
-      <File FileName="Assets/UnityARKitPlugin/ARKitRemote/ObjectSerializationExtension.cs" Line="39" Column="1" NotebookId="1" />
-      <File FileName="Assets/UnityARKitPlugin/Examples/FocusSquare/FocusSquare.cs" Line="27" Column="8" NotebookId="1" />
+      <File FileName="Assets/AugmentedVIEW/Scripts/ResizeBox.cs" Line="1" Column="1" />
+      <File FileName="Assets/AugmentedVIEW/Scripts/AddGraph.cs" Line="1" Column="1" />
+      <File FileName="Assets/AugmentedVIEW/Scripts/GraphPositioner.cs" Line="231" Column="15" />
+      <File FileName="Assets/UnityARKitPlugin/Examples/FocusSquare/FocusSquare.cs" Line="45" Column="7" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/derek/Documents/Unity/CIS693_Project/AugmentedVIEW/Assets/UnityARKitPlugin/Examples/FocusSquare/FocusSquare.cs" line="70" column="1" />
+      <Breakpoint file="/Users/derek/Documents/Unity/CIS693_Project/AugmentedVIEW/Assets/AugmentedVIEW/Scripts/GraphPositioner.cs" line="217" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
