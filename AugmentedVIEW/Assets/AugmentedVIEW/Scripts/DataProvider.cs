@@ -11,7 +11,7 @@ public class DataProvider : MonoBehaviour, IDataProvider
 	Dictionary<int, ITraceDescriptor> _tracesAvailable =
 		new Dictionary<int, ITraceDescriptor>();
 
-	public int UpdateScaleFactor = 5;
+	public int UpdateScaleFactor = 120;
 
 	private static string s1 = @"{
 		""values"": [
