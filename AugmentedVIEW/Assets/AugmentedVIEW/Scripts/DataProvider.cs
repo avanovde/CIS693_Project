@@ -20,17 +20,15 @@ public class DataProvider : MonoBehaviour, IDataProvider
 	private IEnumerator reqco;
 
 	private string _ipAddress = "192.168.30.1";
+	private float _dataScalar = 0.1f;
 
 	// Use this for initialization
 	void Start ()
 	{
 		// Stubbing out the trace descriptors that are available for consumption
-		_tracesAvailable.Add (1, new TraceDescriptor (1, DataType.Time));
-		//_tracesAvailable.Add (new TraceDescriptor (1, DataType.FFT));
-		_tracesAvailable.Add (2, new TraceDescriptor (2, DataType.Time));
-		//_tracesAvailable.Add (new TraceDescriptor (2, DataType.FFT));
-		_tracesAvailable.Add (3, new TraceDescriptor (3, DataType.Time));
-		//_tracesAvailable.Add (new TraceDescriptor (3, DataType.FFT));
+		_tracesAvailable.Add (1, new TraceDescriptor (1, DataType.Time)); // X
+		_tracesAvailable.Add (2, new TraceDescriptor (2, DataType.Time)); // Y
+		_tracesAvailable.Add (3, new TraceDescriptor (3, DataType.Time)); // z
 
 		reqco = GetNewData ();
 		StartCoroutine (reqco);
@@ -48,12 +46,13 @@ public class DataProvider : MonoBehaviour, IDataProvider
 				} else {
 					if (request.isDone) {
 						string data = System.Text.Encoding.UTF8.GetString (request.downloadHandler.data);
+						//Debug.Log ("Data: " + data);
 						var parsedData = IOData.CreateFromJSON (data);
 						foreach (var traceDescriptor in _tracesAvailable.Values) {
 							if (0 <= traceDescriptor.Channel && traceDescriptor.Channel <= parsedData.values.Count) {
-								float dataPoint = parsedData.values [traceDescriptor.Channel];
+								float dataPoint = parsedData.values [traceDescriptor.Channel] * _dataScalar;
 								if (_dataProcessorDictionary.ContainsKey (traceDescriptor.Channel))
-									_dataProcessorDictionary [traceDescriptor.Channel].DataUpdated (traceDescriptor, dataPoint);
+									_dataProcessorDictionary [traceDescriptor.Channel].DataUpdated (traceDescriptor, dataPoint); 
 							}
 						}
 					}
@@ -71,6 +70,11 @@ public class DataProvider : MonoBehaviour, IDataProvider
 		if (regMatch.Success)
 			_ipAddress = newAddress;
 	} 
+
+	public void OnUpdateDataScalar(float value)
+	{
+		_dataScalar = value * 3.0f;
+	}
 
 	void OnDestroy()
 	{

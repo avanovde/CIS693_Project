@@ -12,11 +12,6 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	public ITraceDescriptor YTraceDescriptor;
 	public ITraceDescriptor ZTraceDescriptor;
 
-	// Previous X, Y, and Z values so we can calculate how far to move the cube
-	private float _previousXValue;
-	private float _previousYValue;
-	private float _previousZValue;
-
 	// Current set of X, Y, and Z values for the graph
 	private float _xValue;
 	private float _yValue;
@@ -38,8 +33,6 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	// Update is called once per frame
 	void Update () {
 		_graphMoveFactor = Time.deltaTime * Speed;
-
-		//Debug.Log ("Current: " + _currentPosition + " Target: " + _targetPosition);
 		transform.position = Vector3.Lerp (_currentPosition, _targetPosition, _graphMoveFactor);
 	}
 
@@ -51,29 +44,19 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	{
 		if (traceDescriptor.Channel == XTraceDescriptor.Channel) {
 			//Debug.Log ("X: " + newData);
-			_previousXValue = _xValue;
 			_xValue = newData * GraphScaleFactor;
 		} else if (traceDescriptor.Channel == YTraceDescriptor.Channel) {
 			//Debug.Log ("Y: " + newData);
-			_previousYValue = _yValue;
 			_yValue = newData * GraphScaleFactor;
 		} else if (traceDescriptor.Channel == ZTraceDescriptor.Channel) {
 			//Debug.Log ("Z: " + newData);
-			_previousZValue = _zValue;
 			_zValue = newData * GraphScaleFactor;
 		} else {
 			Debug.Log ("Unused trace descriptor applied to resize box");
 			return;
 		}
 
-		float deltaX = _previousXValue - _xValue;
-		float deltaY = _previousYValue - _yValue;
-		float deltaZ = _previousZValue - _zValue;
-
-		_currentPosition = transform.position;
-
-		if (deltaX != 0f || deltaY != 0 || deltaZ != 0)
-			_targetPosition = new Vector3 (deltaX, deltaY, deltaZ);
+		_targetPosition = new Vector3 (_xValue, _yValue, _zValue);
 	}
 
 	#endregion

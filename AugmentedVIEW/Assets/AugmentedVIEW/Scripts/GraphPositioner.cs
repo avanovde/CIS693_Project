@@ -203,9 +203,6 @@ public class GraphPositioner : MonoBehaviour
 			Debug.Log ("Graph already placed");
 			break;
 		}
-		//			_currentAxisState = AxisState.Locked;
-		//			var arInterface = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
-		//			AnchorID = arInterface.AddUserAnchorFromGameObject (this.gameObject).identifierStr;
 	}
 
 	/// <summary>
