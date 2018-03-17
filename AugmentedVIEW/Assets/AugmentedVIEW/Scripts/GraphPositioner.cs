@@ -31,7 +31,7 @@ public class GraphPositioner : MonoBehaviour
 	//TODO public GameObject lockedPlaneObject;
 
 	// Touch and placement info for the positioner
-	public float maxRayDistance = 30.0f;
+	public float maxRayDistance = 200.0f;
 	public float positionerDistance = 0.5f;
 	public LayerMask collisionLayerMask;
 
@@ -137,7 +137,7 @@ public class GraphPositioner : MonoBehaviour
 		ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
 		// if you want to use infinite planes use this:
 		//ARHitTestResultType.ARHitTestResultTypeExistingPlane,
-		//ARHitTestResultType.ARHitTestResultTypeHorizontalPlane, 
+		ARHitTestResultType.ARHitTestResultTypeHorizontalPlane, 
 		//ARHitTestResultType.ARHitTestResultTypeFeaturePoint
 		}; 
 
@@ -158,7 +158,7 @@ public class GraphPositioner : MonoBehaviour
 			findingPlaneObject.SetActive (true);
 
 			//check camera forward is facing downward
-			if (Vector3.Dot(Camera.main.transform.forward, Vector3.down) > -20)
+			if (Vector3.Dot(Camera.main.transform.forward, Vector3.down) > 0)
 			{
 
 				//position the focus finding square a distance from camera and facing up
@@ -219,6 +219,7 @@ public class GraphPositioner : MonoBehaviour
 		var graphScript = _graph.GetComponentInChildren(typeof(ResizeBox)) as ResizeBox;
 
 		graphManager.TargetPosition = transform.position;
+		graphManager.TargetRotation = transform.rotation;
 
 		// Register the graph to receive data updates from the provider
 		// Sometime we will need to change this to let the user choose, and not hard code

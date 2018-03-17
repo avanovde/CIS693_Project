@@ -37,7 +37,8 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	
 	// Update is called once per frame
 	void Update () {
-		
+		_graphMoveFactor = Time.deltaTime * Speed;
+
 		//Debug.Log ("Current: " + _currentPosition + " Target: " + _targetPosition);
 		transform.position = Vector3.Lerp (_currentPosition, _targetPosition, _graphMoveFactor);
 	}
@@ -70,8 +71,6 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 		float deltaZ = _previousZValue - _zValue;
 
 		_currentPosition = transform.position;
-
-		_graphMoveFactor = Time.deltaTime * Speed;
 
 		if (deltaX != 0f || deltaY != 0 || deltaZ != 0)
 			_targetPosition = new Vector3 (deltaX, deltaY, deltaZ);
