@@ -2,12 +2,11 @@
 using System.Collections;
 using UnityEngine.XR.iOS;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GraphPositioner : MonoBehaviour
 {
-	const int MOUSE_LEFT = 0;
-	const int MOUSE_RIGHT = 1;
-	const int MOUSE_MIDDLE = 2;
+	public Text status; // Used for debugging on a device
 
 	public enum PositionerState {
 		Initializing,
@@ -25,31 +24,36 @@ public class GraphPositioner : MonoBehaviour
 		}
 	}
 
+	// Information for hit tests that can be used by the Unity editor or on a device
+	private Vector3 hitPosition; // Used for recording a hit location
+	private Quaternion hitRotation; // Used for recording a hit rotation
+
+	//use center of screen for focusing
+	private Vector3 center;
+
 	// Game object for the positioner
 	public GameObject findingPlaneObject;
 	public GameObject foundPlaneObject;
-	//TODO public GameObject lockedPlaneObject;
 
 	// Touch and placement info for the positioner
-	public float maxRayDistance = 200.0f;
+	public float maxRayDistance = 30.0f;
 	public float positionerDistance = 0.5f;
 	public LayerMask collisionLayerMask;
 
 	public GameObject GraphPrefab { get; set; }
 	public IDataProvider DataProvider { get; set;}
-		
 	private GameObject _graph { get; set; }
 
-	bool trackingInitialized;
+	private bool trackingInitialized;
 
-	bool HitTestWithResultType (ARPoint point, ARHitTestResultType resultTypes)
+	private bool HitTestWithResultType (ARPoint point, ARHitTestResultType resultTypes)
 	{
 		List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface ().HitTest (point, resultTypes);
 		if (hitResults.Count > 0) {
 			foreach (var hitResult in hitResults) {
-				foundPlaneObject.transform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
-				foundPlaneObject.transform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
-				Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", foundPlaneObject.transform.position.x, foundPlaneObject.transform.position.y, foundPlaneObject.transform.position.z));
+				hitPosition = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+				hitRotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
+				//Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", foundPlaneObject.transform.position.x, foundPlaneObject.transform.position.y, foundPlaneObject.transform.position.z));
 				return true;
 			}
 		}
@@ -64,6 +68,8 @@ public class GraphPositioner : MonoBehaviour
 
 	void Update()
 	{
+		// Update this before updating the positioner location or checking for a user press
+		center = new Vector3(Screen.width/2, Screen.height/2, positionerDistance);
 		UpdatePositionerLocation ();
 		CheckForUserPress ();
 	}
@@ -74,22 +80,32 @@ public class GraphPositioner : MonoBehaviour
 	/// </summary>
 	private void CheckForUserPress()
 	{
+		bool userPressedScreen = false;
+		Vector3 position = new Vector3(0,0,0);
+
 		#if UNITY_EDITOR
-		if (Input.GetMouseButtonDown(MOUSE_LEFT))
+		if (Input.GetMouseButtonDown (0)) {
+			position = Input.mousePosition;
+			userPressedScreen = true;
+		} 
+		#else
+		foreach (var touch in Input.touches){
+			if (touch.phase == TouchPhase.Began) {
+				position = touch.position; // Using the last touch position... hope this is ok.
+				userPressedScreen = true;
+			}
+		}
+		#endif
+
+		if (userPressedScreen)
 		{
-			var mousePosition = Input.mousePosition;
 			RaycastHit hit;
-			Ray userClickRay = Camera.main.ScreenPointToRay(mousePosition);
+			Ray userClickRay = Camera.main.ScreenPointToRay(position);
 			if (Physics.Raycast(userClickRay, out hit)) 
 			{
 				ToggleState();
 			}
-
 		}
-		#else
-
-
-		#endif
 	}
 
 	/// <summary>
@@ -98,9 +114,6 @@ public class GraphPositioner : MonoBehaviour
 	/// </summary>
 	private void UpdatePositionerLocation()
 	{
-		//use center of screen for focusing
-		Vector3 center = new Vector3(Screen.width/2, Screen.height/2, positionerDistance);
-
 		#if UNITY_EDITOR
 		Ray ray = Camera.main.ScreenPointToRay (center);
 		RaycastHit hit;
@@ -109,79 +122,43 @@ public class GraphPositioner : MonoBehaviour
 		//effectively similar to calling HitTest with ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent
 		if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayerMask)) {
 			//we're going to get the position from the contact point
-			foundPlaneObject.transform.position = hit.point;
+			hitPosition = hit.point;
+			hitRotation = hit.transform.rotation;
 
-			//float distance = Vector3.Distance(foundPlaneObject.transform.position, Camera.main.transform.position);
-			//Debug.Log("Distance " + distance);
-
-			//and the rotation from the transform of the plane collider
-			CurrentState = PositionerState.FoundPlane;
-			foundPlaneObject.transform.rotation = hit.transform.rotation;
-
-			// Turn on the found positioner graphics
-			foundPlaneObject.SetActive(true);
-			findingPlaneObject.SetActive(false);
+			PositionerOnPlane();
 			return;
 		}
-
-
 		#else
+		status.color = Color.red;
+		status.fontSize= 40;
 		var screenPosition = Camera.main.ScreenToViewportPoint(center);
 		ARPoint point = new ARPoint {
-		x = screenPosition.x,
-		y = screenPosition.y
+			x = screenPosition.x,
+			y = screenPosition.y
 		};
 
 		// prioritize reults types
 		ARHitTestResultType[] resultTypes = {
-		ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
-		// if you want to use infinite planes use this:
-		//ARHitTestResultType.ARHitTestResultTypeExistingPlane,
-		ARHitTestResultType.ARHitTestResultTypeHorizontalPlane, 
-		//ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+			ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+			// if you want to use infinite planes use this:
+			//ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+			ARHitTestResultType.ARHitTestResultTypeHorizontalPlane, 
+			//ARHitTestResultType.ARHitTestResultTypeFeaturePoint
 		}; 
 
 		foreach (ARHitTestResultType resultType in resultTypes)
 		{
-		if (HitTestWithResultType (point, resultType))
-		{
-		CurrentState = PositionerState.FoundPlane;
-		return;
+			if (HitTestWithResultType (point, resultType))
+			{
+				PositionerOnPlane ();
+				return;
+			}
 		}
-		}
+		status.text = "Nothing found in center of screen";
 		#endif
 
 		//if you got here, we have not found a plane, so if camera is facing below horizon, display the focus "finding" square
-		if (trackingInitialized) {
-			CurrentState = PositionerState.FindingPlane;
-			foundPlaneObject.SetActive (false);
-			findingPlaneObject.SetActive (true);
-
-			//check camera forward is facing downward
-			if (Vector3.Dot(Camera.main.transform.forward, Vector3.down) > 0)
-			{
-
-				//position the focus finding square a distance from camera and facing up
-				findingPlaneObject.transform.position = Camera.main.ScreenToWorldPoint(center);
-
-				//vector from camera to focussquare
-				Vector3 vecToCamera = findingPlaneObject.transform.position - Camera.main.transform.position;
-
-				//find vector that is orthogonal to camera vector and up vector
-				Vector3 vecOrthogonal = Vector3.Cross(vecToCamera, Vector3.up);
-
-				//find vector orthogonal to both above and up vector to find the forward vector in basis function
-				Vector3 vecForward = Vector3.Cross(vecOrthogonal, Vector3.up);
-
-				findingPlaneObject.transform.rotation = Quaternion.LookRotation(vecForward,Vector3.up);
-
-			}
-			else
-			{
-				//we will not display finding square if camera is not facing below horizon
-				findingPlaneObject.SetActive(false);
-			}
-		}
+		PositionerNotOnPlane();
 	}
 
 	/// <summary>
@@ -194,6 +171,7 @@ public class GraphPositioner : MonoBehaviour
 			Debug.Log ("Plane not detected, unable to place a graph here");
 			break;
 		case PositionerState.FoundPlane:
+			foundPlaneObject.SetActive (false); // turn off the positioner
 			PlaceGraph ();
 			break;
 		case PositionerState.Initializing:
@@ -233,6 +211,56 @@ public class GraphPositioner : MonoBehaviour
 		// Turn on the graph
 		_graph.SetActive(true);
 		return;
+	}
+
+	private void PositionerOnPlane()
+	{
+		// Set the state to found
+		CurrentState = PositionerState.FoundPlane;
+
+		// Set the found positioner to the location and rotation of where we found
+		foundPlaneObject.transform.position = hitPosition;
+		foundPlaneObject.transform.rotation = hitRotation;
+
+		// Update object visibility to show the found plane and hide the finding plane
+		findingPlaneObject.SetActive(false);
+		foundPlaneObject.SetActive (true);
+
+		status.text="Found valid plane for placing graph";
+	}
+
+	private void PositionerNotOnPlane()
+	{
+		if (trackingInitialized) {
+			CurrentState = PositionerState.FindingPlane;
+			foundPlaneObject.SetActive (false);
+			findingPlaneObject.SetActive (true);
+
+			//check camera forward is facing downward
+			if (Vector3.Dot(Camera.main.transform.forward, Vector3.down) > 0)
+			{
+
+				//position the focus finding square a distance from camera and facing up
+				findingPlaneObject.transform.position = Camera.main.ScreenToWorldPoint(center);
+
+				//vector from camera to focussquare
+				Vector3 vecToCamera = findingPlaneObject.transform.position - Camera.main.transform.position;
+
+				//find vector that is orthogonal to camera vector and up vector
+				Vector3 vecOrthogonal = Vector3.Cross(vecToCamera, Vector3.up);
+
+				//find vector orthogonal to both above and up vector to find the forward vector in basis function
+				Vector3 vecForward = Vector3.Cross(vecOrthogonal, Vector3.up);
+
+				findingPlaneObject.transform.rotation = Quaternion.LookRotation(vecForward,Vector3.up);
+
+			}
+			else
+			{
+				//we will not display finding square if camera is not facing below horizon
+				findingPlaneObject.SetActive(false);
+			}
+		}
 	}
 }
 
