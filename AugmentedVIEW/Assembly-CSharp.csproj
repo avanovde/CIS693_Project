@@ -60,6 +60,7 @@
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProcessor.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\IDataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ITraceDescriptor.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\MoveBox.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ResizeBox.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\ToggleGameObjectVisibility.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\TraceDescriptor.cs" />

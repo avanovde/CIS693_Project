@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ResizeBox : MonoBehaviour, IDataProcessor
+public class MoveBox : MonoBehaviour, IDataProcessor
 {
 	public float GraphScaleFactor = 0.5f;
+	public float Speed = 1.0f;
 
 	public ITraceDescriptor XTraceDescriptor;
 	public ITraceDescriptor YTraceDescriptor;
@@ -19,14 +20,20 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 	public bool GraphPositioned = false;
 	private float _graphMoveFactor;
 
+	private Vector3 _currentPosition;
+	private Vector3 _targetPosition;
+
+
 	// Use this for initialization
 	void Start () {
-
+		_currentPosition = transform.position;
+		_targetPosition = transform.position;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		transform.localScale = new Vector3(1 + _xValue, 1 + _yValue, 1 + _zValue);
+		_graphMoveFactor = Time.deltaTime * Speed;
+		transform.position = Vector3.Lerp (_currentPosition, _targetPosition, _graphMoveFactor);
 	}
 
 	#region IDataProcessor implementation
@@ -48,6 +55,8 @@ public class ResizeBox : MonoBehaviour, IDataProcessor
 			Debug.Log ("Unused trace descriptor applied to resize box");
 			return;
 		}
+
+		_targetPosition = new Vector3 (_xValue, _yValue, _zValue);
 	}
 
 	#endregion
