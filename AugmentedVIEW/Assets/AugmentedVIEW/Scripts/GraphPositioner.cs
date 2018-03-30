@@ -41,7 +41,6 @@ public class GraphPositioner : MonoBehaviour
 	public LayerMask collisionLayerMask;
 
 	public GameObject GraphPrefab { get; set; }
-	public IDataProvider DataProvider { get; set;}
 	private GameObject _graph { get; set; }
 
 	private bool trackingInitialized;
@@ -68,6 +67,8 @@ public class GraphPositioner : MonoBehaviour
 
 	void Update()
 	{
+		if (foundPlaneObject == null)
+			foundPlaneObject = null;
 		// Update this before updating the positioner location or checking for a user press
 		center = new Vector3(Screen.width/2, Screen.height/2, positionerDistance);
 		UpdatePositionerLocation ();
@@ -191,20 +192,9 @@ public class GraphPositioner : MonoBehaviour
 		// Create and setup the new graph
 		_graph = Instantiate (GraphPrefab);
 		var graphManager = _graph.GetComponent<GraphManager> ();
-		var graphScript = _graph.GetComponentInChildren(typeof(ResizeBox)) as ResizeBox;
 
 		graphManager.TargetPosition = transform.position;
 		graphManager.TargetRotation = transform.rotation;
-
-		// Register the graph to receive data updates from the provider
-		// Sometime we will need to change this to let the user choose, and not hard code
-		var availableTraces = DataProvider.AvailableTraces;
-		graphScript.XTraceDescriptor = availableTraces [0];
-		graphScript.YTraceDescriptor = availableTraces [1];
-		graphScript.ZTraceDescriptor = availableTraces [2];
-		DataProvider.RegisterForData (availableTraces [0], graphScript);
-		DataProvider.RegisterForData (availableTraces [1], graphScript);
-		DataProvider.RegisterForData (availableTraces [2], graphScript);
 
 		// Turn off the positioning axes
 		gameObject.SetActive(false);

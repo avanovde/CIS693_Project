@@ -11,20 +11,6 @@ public class AddGraph : MonoBehaviour {
 
 	public void AddGraphButtonHandler()
 	{
-		// First try get the data provider, before doing any more work
-		GameObject providerObject = GameObject.Find("DataProvider");
-		if (providerObject == null) {
-			Debug.Log ("Unable to find the game object named data provider");
-			return;
-		}
-
-		IDataProvider dataProvider = providerObject.GetComponent<DataProvider> ();
-
-		if (dataProvider == null) {
-			Debug.Log ("Unable to get the data provider");
-			return;
-		}
-
 		Vector3 cameraPosition = Camera.main.transform.position;
 		Quaternion orientation = Camera.main.transform.rotation;
 
@@ -40,6 +26,5 @@ public class AddGraph : MonoBehaviour {
 			return;
 		}
 		positionerScript.GraphPrefab = GraphPrefab;
-		positionerScript.DataProvider = dataProvider;
 	}
 }

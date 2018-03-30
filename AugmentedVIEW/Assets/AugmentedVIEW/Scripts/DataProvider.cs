@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text.RegularExpressions;
+using System;
 
-public class DataProvider : MonoBehaviour, IDataProvider
+public class DataProvider : MonoBehaviour
 {
-	// Mapping of data to graph
-	Dictionary<int, IDataProcessor> _dataProcessorDictionary = 
-		new Dictionary<int, IDataProcessor>();
-
 	Dictionary<int, ITraceDescriptor> _tracesAvailable =
 		new Dictionary<int, ITraceDescriptor>();
 
@@ -21,6 +18,8 @@ public class DataProvider : MonoBehaviour, IDataProvider
 
 	private string _ipAddress = "192.168.30.1";
 	private float _dataScalar = 0.1f;
+
+	public event EventHandler<DataUpdatedEventArgs> NewDataAvailable;
 
 	// Use this for initialization
 	void Start ()
@@ -51,13 +50,23 @@ public class DataProvider : MonoBehaviour, IDataProvider
 						foreach (var traceDescriptor in _tracesAvailable.Values) {
 							if (0 <= traceDescriptor.Channel && traceDescriptor.Channel <= parsedData.values.Count) {
 								float dataPoint = parsedData.values [traceDescriptor.Channel] * _dataScalar;
-								if (_dataProcessorDictionary.ContainsKey (traceDescriptor.Channel))
-									_dataProcessorDictionary [traceDescriptor.Channel].DataUpdated (traceDescriptor, dataPoint); 
+								var dataUpdatedEventArgs = new DataUpdatedEventArgs ();
+								dataUpdatedEventArgs.DataPoint = dataPoint;
+								dataUpdatedEventArgs.TraceId = traceDescriptor.Channel;
+								OnNewDataAvailable (dataUpdatedEventArgs);
 							}
 						}
 					}
 				}
 			}
+		}
+	}
+
+	protected virtual void OnNewDataAvailable(DataUpdatedEventArgs e)
+	{
+		EventHandler<DataUpdatedEventArgs> handler = NewDataAvailable;
+		if (handler != null) {
+			handler (this, e);
 		}
 	}
 
@@ -80,31 +89,11 @@ public class DataProvider : MonoBehaviour, IDataProvider
 	{
 		StopCoroutine (reqco);
 	}
-
-	#region IDataProvider implementation
+		
 	public IList<ITraceDescriptor> AvailableTraces 
 	{ 
 		get { return new List<ITraceDescriptor> (_tracesAvailable.Values); }
 	}
-
-	public void RegisterForData (
-		ITraceDescriptor traceDescriptor, 
-		IDataProcessor newProcessor)
-	{
-		if (!_dataProcessorDictionary.ContainsKey (traceDescriptor.Channel) && _tracesAvailable.ContainsKey(traceDescriptor.Channel) )
-			_dataProcessorDictionary.Add (traceDescriptor.Channel, newProcessor);
-		else
-			Debug.Log ("Trace descriptor already registered");
-	}
-
-	public void DeregisterForData (
-		ITraceDescriptor traceDescriptor)
-	{
-		if (_dataProcessorDictionary.ContainsKey (traceDescriptor.Channel))
-			_dataProcessorDictionary.Remove (traceDescriptor.Channel);
-	}
-
-	#endregion
 }
 
 //https://docs.unity3d.com/ScriptReference/JsonUtility.FromJson.html

@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d7af84ab62b4d7392893d9744756df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1228964171960304, guid: 6b4b574b69f384bd9a353b1e230fffa6, type: 2}
+  Prefab: {fileID: 479305526}
   GraphPrefab: {fileID: 1352771998190962, guid: 4dc2760371ddb4285ace5eeace9e1aff,
     type: 2}
 --- !u!114 &95350623
@@ -582,6 +582,24 @@ MonoBehaviour:
   Prefab: {fileID: 479305526}
   GraphPrefab: {fileID: 1877007316080742, guid: 0922bf3358e6748a9bcd7cb7f6b2f521,
     type: 2}
+--- !u!1 &152203774 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1922958992397686, guid: 4dc2760371ddb4285ace5eeace9e1aff,
+    type: 2}
+  m_PrefabInternal: {fileID: 1583112957}
+--- !u!114 &152203779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 152203774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e09ae1c3daea49d1af064599c148227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GraphScaleFactor: 0.5
+  GraphPositioned: 0
 --- !u!1 &169034287
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MoveBox : MonoBehaviour, IDataProcessor
+public class MoveBox : MonoBehaviour
 {
 	public float GraphScaleFactor = 0.5f;
 	public float Speed = 1.0f;
@@ -23,6 +23,32 @@ public class MoveBox : MonoBehaviour, IDataProcessor
 	private Vector3 _currentPosition;
 	private Vector3 _targetPosition;
 
+	private DataProvider _dataProvider;
+
+
+	void Awake() {
+		// First try get the data provider, before doing any more work
+		GameObject providerObject = GameObject.Find("DataProvider");
+		if (providerObject == null) {
+			Debug.Log ("Unable to find the game object named data provider");
+			return;
+		}
+
+		_dataProvider = providerObject.GetComponent<DataProvider> ();
+
+		if (_dataProvider == null) {
+			Debug.Log ("Unable to get the data provider");
+			return;
+		}
+
+		// Set up which traces we want data from
+		var tracesAvailable = _dataProvider.AvailableTraces;
+		XTraceDescriptor = tracesAvailable [1];
+		YTraceDescriptor = tracesAvailable [2];
+		ZTraceDescriptor = tracesAvailable [3];
+
+		_dataProvider.NewDataAvailable += HandleNewData;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -36,28 +62,28 @@ public class MoveBox : MonoBehaviour, IDataProcessor
 		transform.position = Vector3.Lerp (_currentPosition, _targetPosition, _graphMoveFactor);
 	}
 
-	#region IDataProcessor implementation
+	void OnDestroy() {
+		_dataProvider.NewDataAvailable -= HandleNewData;
+	}
 
-	public void DataUpdated (
-		ITraceDescriptor traceDescriptor,
-		float newData)
+	public void HandleNewData (
+		object sender,
+		DataUpdatedEventArgs e)
 	{
-		if (traceDescriptor.Channel == XTraceDescriptor.Channel) {
+		var dataPoint = e.DataPoint;
+		var traceId = e.TraceId;
+		if (dataPoint == XTraceDescriptor.Channel) {
 			//Debug.Log ("X: " + newData);
-			_xValue = newData * GraphScaleFactor;
-		} else if (traceDescriptor.Channel == YTraceDescriptor.Channel) {
+			_xValue = dataPoint * GraphScaleFactor;
+		} else if (dataPoint == YTraceDescriptor.Channel) {
 			//Debug.Log ("Y: " + newData);
-			_yValue = newData * GraphScaleFactor;
-		} else if (traceDescriptor.Channel == ZTraceDescriptor.Channel) {
+			_yValue = dataPoint * GraphScaleFactor;
+		} else if (dataPoint == ZTraceDescriptor.Channel) {
 			//Debug.Log ("Z: " + newData);
-			_zValue = newData * GraphScaleFactor;
+			_zValue = dataPoint * GraphScaleFactor;
 		} else {
 			Debug.Log ("Unused trace descriptor applied to resize box");
 			return;
 		}
-
-		_targetPosition = new Vector3 (_xValue, _yValue, _zValue);
 	}
-
-	#endregion
 }
