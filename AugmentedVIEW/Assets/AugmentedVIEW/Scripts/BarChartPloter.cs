@@ -88,6 +88,10 @@ public class BarChartPloter : MonoBehaviour
 		_delta = 0.0f;
 	}
 
+	void OnDestroy() {
+		_dataProvider.NewDataAvailable -= HandleNewData;
+	}
+
 	public void HandleNewData (
 		object sender,
 		DataUpdatedEventArgs e)
