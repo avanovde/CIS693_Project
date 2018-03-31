@@ -48,7 +48,7 @@ public class BarChartPloter : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		_initialPosition = transform.position;
+		_initialPosition = new Vector3 (0, 0, 0);
 	}
 	
 	// Update is called once per frame
@@ -57,7 +57,7 @@ public class BarChartPloter : MonoBehaviour
 		if (_delta == 0.0f)
 			return; // No change since last frame render, so drop out.
 		
-		var halfDelta = _delta / 2;
+		var halfDelta = _delta / 2; // half because the center point is in the middle of the cube
 		if (IsXAxis) {
 			transform.position = new Vector3 (
 				_initialPosition.x + halfDelta,

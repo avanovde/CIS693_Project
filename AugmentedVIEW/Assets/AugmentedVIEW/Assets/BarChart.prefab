@@ -38,6 +38,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4817235480354762}
+  - component: {fileID: 114156264702242514}
   m_Layer: 0
   m_Name: BarChart
   m_TagString: Untagged
@@ -313,6 +314,20 @@ MonoBehaviour:
   IsYAxis: 1
   IsZAxis: 0
   GraphScaleFactor: 0.5
+  InitialPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &114156264702242514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1876753651763902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e177146c16934795a6c1ac8ed5ae138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPosition: {x: 0, y: 0, z: 0}
+  TargetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114448594204124584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,6 +344,7 @@ MonoBehaviour:
   IsYAxis: 0
   IsZAxis: 1
   GraphScaleFactor: 0.5
+  InitialPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114720675400637232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,3 +361,4 @@ MonoBehaviour:
   IsYAxis: 0
   IsZAxis: 0
   GraphScaleFactor: 0.5
+  InitialPosition: {x: 0, y: 0, z: 0}
