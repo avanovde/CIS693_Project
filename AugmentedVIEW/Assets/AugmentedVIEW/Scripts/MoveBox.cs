@@ -52,6 +52,7 @@ public class MoveBox : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
+		transform.position = new Vector3 (0, 0, 0); // MoveBox us Touch the origin.
 		_currentPosition = transform.position;
 		_targetPosition = transform.position;
 	}
