@@ -71,7 +71,6 @@ public class MoveBox : MonoBehaviour
 		DataUpdatedEventArgs e)
 	{
 		var data = e.Data;
-		var subscribedTraces = new List<ITraceDescriptor> {XTraceDescriptor, YTraceDescriptor, ZTraceDescriptor};
 
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
 			if ( channelIndex == XTraceDescriptor.Channel) {
