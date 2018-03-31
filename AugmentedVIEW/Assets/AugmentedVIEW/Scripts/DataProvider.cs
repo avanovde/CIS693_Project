@@ -47,15 +47,8 @@ public class DataProvider : MonoBehaviour
 						string data = System.Text.Encoding.UTF8.GetString (request.downloadHandler.data);
 						//Debug.Log ("Data: " + data);
 						var parsedData = IOData.CreateFromJSON (data);
-						foreach (var traceDescriptor in _tracesAvailable.Values) {
-							if (0 <= traceDescriptor.Channel && traceDescriptor.Channel <= parsedData.values.Count) {
-								float dataPoint = parsedData.values [traceDescriptor.Channel] * _dataScalar;
-								var dataUpdatedEventArgs = new DataUpdatedEventArgs ();
-								dataUpdatedEventArgs.DataPoint = dataPoint;
-								dataUpdatedEventArgs.TraceId = traceDescriptor.Channel;
-								OnNewDataAvailable (dataUpdatedEventArgs);
-							}
-						}
+						var dataUpdatedEventArgs = new DataUpdatedEventArgs (parsedData);
+						OnNewDataAvailable (dataUpdatedEventArgs);
 					}
 				}
 			}

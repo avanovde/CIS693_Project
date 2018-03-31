@@ -47,7 +47,6 @@ public class ResizeBox : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-
 	}
 	
 	// Update is called once per frame
@@ -63,20 +62,23 @@ public class ResizeBox : MonoBehaviour
 		object sender,
 		DataUpdatedEventArgs e)
 	{
-		var dataPoint = e.DataPoint;
-		var traceId = e.TraceId;
-		if (dataPoint == XTraceDescriptor.Channel) {
-			//Debug.Log ("X: " + newData);
-			_xValue = dataPoint * GraphScaleFactor;
-		} else if (dataPoint == YTraceDescriptor.Channel) {
-			//Debug.Log ("Y: " + newData);
-			_yValue = dataPoint * GraphScaleFactor;
-		} else if (dataPoint == ZTraceDescriptor.Channel) {
-			//Debug.Log ("Z: " + newData);
-			_zValue = dataPoint * GraphScaleFactor;
-		} else {
-			Debug.Log ("Unused trace descriptor applied to resize box");
-			return;
+		var data = e.Data;
+		var subscribedTraces = new List<ITraceDescriptor> {XTraceDescriptor, YTraceDescriptor, ZTraceDescriptor};
+
+		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
+			if ( channelIndex == XTraceDescriptor.Channel) {
+				//Debug.Log ("X: " + newData);
+				_xValue = data.values[channelIndex] * GraphScaleFactor;
+			} else if (channelIndex == YTraceDescriptor.Channel) {
+				//Debug.Log ("Y: " + newData);
+				_yValue = data.values[channelIndex] * GraphScaleFactor;
+			} else if (channelIndex == ZTraceDescriptor.Channel) {
+				//Debug.Log ("Z: " + newData);
+				_zValue = data.values[channelIndex] * GraphScaleFactor;
+			} else {
+				Debug.Log ("Unused trace descriptor applied to resize box");
+				return;
+			}
 		}
 	}
 }

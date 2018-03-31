@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\AugmentedVIEW\Scripts\AddGraph.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\Axis.cs" />
+     <Compile Include="Assets\AugmentedVIEW\Scripts\BarChartPloter.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataProvider.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataType.cs" />
      <Compile Include="Assets\AugmentedVIEW\Scripts\DataUpdatedEventArgs.cs" />
