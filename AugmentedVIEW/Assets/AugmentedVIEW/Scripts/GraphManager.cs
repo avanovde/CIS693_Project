@@ -14,7 +14,7 @@ public class GraphManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		transform.position = Vector3.Lerp (transform.position, TargetPosition, Time.deltaTime);
+		transform.position = TargetPosition;
 		transform.rotation = TargetRotation;
 	}
 }
