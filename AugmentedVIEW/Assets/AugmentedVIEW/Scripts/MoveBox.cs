@@ -85,5 +85,7 @@ public class MoveBox : MonoBehaviour
 				_zValue = data.values[channelIndex] * GraphScaleFactor;
 			}
 		}
+
+		_targetPosition = new Vector3 (_xValue, _yValue, _zValue);
 	}
 }

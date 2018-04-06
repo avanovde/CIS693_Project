@@ -67,13 +67,19 @@ public class ResizeBox : MonoBehaviour
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
 			if ( channelIndex == XTraceDescriptor.Channel) {
 				//Debug.Log ("X: " + newData);
-				_xValue = data.values[channelIndex] * GraphScaleFactor;
+				// Absolute value so we don't implode when acceleration is negative
+				// Add .001 so that it doesn't ever reach 0
+				_xValue = Math.Abs(data.values[channelIndex] * GraphScaleFactor) + 0.001f;
 			} else if (channelIndex == YTraceDescriptor.Channel) {
 				//Debug.Log ("Y: " + newData);
-				_yValue = data.values[channelIndex] * GraphScaleFactor;
+				// Absolute value so we don't implode when acceleration is negative
+				// Add .001 so that it doesn't ever reach 0
+				_yValue = Math.Abs(data.values[channelIndex] * GraphScaleFactor) + 0.001f;
 			} else if (channelIndex == ZTraceDescriptor.Channel) {
 				//Debug.Log ("Z: " + newData);
-				_zValue = data.values[channelIndex] * GraphScaleFactor;
+				// Absolute value so we don't implode when acceleration is negative
+				// Add .001 so that it doesn't ever reach 0
+				_zValue = Math.Abs(data.values[channelIndex] * GraphScaleFactor) + 0.001f;
 			}
 		}
 	}

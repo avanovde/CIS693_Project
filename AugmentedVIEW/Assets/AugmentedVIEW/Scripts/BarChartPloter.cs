@@ -9,7 +9,7 @@ public class BarChartPloter : MonoBehaviour
 	public bool IsYAxis = false;
 	public bool IsZAxis = false;
 
-	public float GraphScaleFactor = 0.5f;
+	public float GraphScaleFactor = 1.0f;
 
 	private DataProvider _dataProvider;
 	private ITraceDescriptor _traceDescriptor;
@@ -37,10 +37,14 @@ public class BarChartPloter : MonoBehaviour
 
 		// Set up which traces we want data from
 		var tracesAvailable = _dataProvider.AvailableTraces;
-		if (0 < Channel && Channel <= tracesAvailable.Count) {
-			_traceDescriptor = tracesAvailable [Channel];		
-		} else {
-			Debug.Log ("Unable to locate trace descriptor for barchart");
+		foreach (var currentTrace in tracesAvailable) {
+			if (currentTrace.Channel == Channel)
+				_traceDescriptor = currentTrace;
+		}
+
+		if (_traceDescriptor == null) {
+			Debug.Log ("Unable to locate trace descriptor");
+			return;
 		}
 		_dataProvider.NewDataAvailable += HandleNewData;
 	}

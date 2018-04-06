@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811c430ac1e8b4b54a5dd98c80a9bec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Channel: 1
+  Channel: 3
   IsXAxis: 0
   IsYAxis: 1
   IsZAxis: 0
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811c430ac1e8b4b54a5dd98c80a9bec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Channel: 2
+  Channel: 4
   IsXAxis: 0
   IsYAxis: 0
   IsZAxis: 1
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811c430ac1e8b4b54a5dd98c80a9bec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Channel: 0
+  Channel: 2
   IsXAxis: 1
   IsYAxis: 0
   IsZAxis: 0
