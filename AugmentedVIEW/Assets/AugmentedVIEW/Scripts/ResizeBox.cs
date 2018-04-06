@@ -38,9 +38,9 @@ public class ResizeBox : MonoBehaviour
 
 		// Set up which traces we want data from
 		var tracesAvailable = _dataProvider.AvailableTraces;
-		XTraceDescriptor = tracesAvailable [1];
-		YTraceDescriptor = tracesAvailable [2];
-		ZTraceDescriptor = tracesAvailable [3];
+		XTraceDescriptor = tracesAvailable [0];
+		YTraceDescriptor = tracesAvailable [1];
+		ZTraceDescriptor = tracesAvailable [2];
 
 		_dataProvider.NewDataAvailable += HandleNewData;
 	}
@@ -63,7 +63,6 @@ public class ResizeBox : MonoBehaviour
 		DataUpdatedEventArgs e)
 	{
 		var data = e.Data;
-		var subscribedTraces = new List<ITraceDescriptor> {XTraceDescriptor, YTraceDescriptor, ZTraceDescriptor};
 
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
 			if ( channelIndex == XTraceDescriptor.Channel) {
@@ -75,9 +74,6 @@ public class ResizeBox : MonoBehaviour
 			} else if (channelIndex == ZTraceDescriptor.Channel) {
 				//Debug.Log ("Z: " + newData);
 				_zValue = data.values[channelIndex] * GraphScaleFactor;
-			} else {
-				Debug.Log ("Unused trace descriptor applied to resize box");
-				return;
 			}
 		}
 	}

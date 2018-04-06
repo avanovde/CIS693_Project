@@ -43,9 +43,9 @@ public class MoveBox : MonoBehaviour
 
 		// Set up which traces we want data from
 		var tracesAvailable = _dataProvider.AvailableTraces;
-		XTraceDescriptor = tracesAvailable [1];
-		YTraceDescriptor = tracesAvailable [2];
-		ZTraceDescriptor = tracesAvailable [3];
+		XTraceDescriptor = tracesAvailable [0];
+		YTraceDescriptor = tracesAvailable [1];
+		ZTraceDescriptor = tracesAvailable [2];
 
 		_dataProvider.NewDataAvailable += HandleNewData;
 	}
@@ -75,17 +75,14 @@ public class MoveBox : MonoBehaviour
 
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
 			if ( channelIndex == XTraceDescriptor.Channel) {
-				//Debug.Log ("X: " + newData);
+				//Debug.Log ("X: " + data.values[channelIndex]);
 				_xValue = data.values[channelIndex] * GraphScaleFactor;
 			} else if (channelIndex == YTraceDescriptor.Channel) {
-				//Debug.Log ("Y: " + newData);
+				//Debug.Log ("Y: " + data.values[channelIndex]);
 				_yValue = data.values[channelIndex] * GraphScaleFactor;
 			} else if (channelIndex == ZTraceDescriptor.Channel) {
-				//Debug.Log ("Z: " + newData);
+				//Debug.Log ("Z: " + data.values[channelIndex]);
 				_zValue = data.values[channelIndex] * GraphScaleFactor;
-			} else {
-				Debug.Log ("Unused trace descriptor applied to resize box");
-				return;
 			}
 		}
 	}

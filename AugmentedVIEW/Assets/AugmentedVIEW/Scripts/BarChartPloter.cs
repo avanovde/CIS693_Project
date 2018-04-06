@@ -104,9 +104,6 @@ public class BarChartPloter : MonoBehaviour
 				var newDataPoint = data.values [channelIndex] * GraphScaleFactor;
 				_delta = _previousDataValue - newDataPoint;
 				_previousDataValue = newDataPoint;
-			} else {
-				Debug.Log ("Unused trace descriptor applied to resize box");
-				return;
 			}
 		}
 	}
