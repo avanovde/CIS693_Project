@@ -3120,6 +3120,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
         type: 2}
+      propertyPath: status
+      value: 
+      objectReference: {fileID: 704168009}
+    - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
+        type: 2}
       propertyPath: findingPlaneObject
       value: 
       objectReference: {fileID: 2088085173}
@@ -3128,30 +3133,6 @@ Prefab:
       propertyPath: foundPlaneObject
       value: 
       objectReference: {fileID: 1611631708}
-    - target: {fileID: 1228964171960304, guid: 6b4b574b69f384bd9a353b1e230fffa6, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
-        type: 2}
-      propertyPath: maxRayDistance
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
-        type: 2}
-      propertyPath: collisionLayerMask.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
-        type: 2}
-      propertyPath: pressed
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114635970363806124, guid: 6b4b574b69f384bd9a353b1e230fffa6,
-        type: 2}
-      propertyPath: status
-      value: 
-      objectReference: {fileID: 704168009}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6b4b574b69f384bd9a353b1e230fffa6, type: 2}
   m_IsPrefabParent: 0

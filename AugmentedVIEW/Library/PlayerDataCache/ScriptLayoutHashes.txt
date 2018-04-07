@@ -161,6 +161,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 c3bbced3b920c972296954f059b11c2e Assembly-CSharp.dll:UnityEngine.UI.BoxSlider
 7317d05fdc27591726053b234b9ea5ee Assembly-CSharp.dll:.ColorSliderImage
+f93fbb9d9e8079a4e7dc7f60242e2cb8 Assembly-CSharp.dll:.BarChartPloter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
@@ -177,7 +178,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 3c131bc1fcd62a99173616f1006723eb Assembly-CSharp.dll:.ColorImage
-24524470de385040e04b7e7d38b1ac3c Assembly-CSharp.dll:.ResizeBox
+8285aa17cdb72b01aa766108302ce9cf Assembly-CSharp.dll:.ResizeBox
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:UnityEngine.XR.iOS.UnityARUserAnchorComponent
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BlendshapePrinter
@@ -185,6 +186,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 48b4f2bb90cadfa8931f7d8baac4245e Assembly-CSharp.dll:.ColorSlider
 48aac773de77753c007e6b8e5fa95d61 Assembly-CSharp.dll:.ColorPresets
 2ba36b6a81a4caef27f07fa7511b83ea Assembly-CSharp.dll:UnityEngine.XR.iOS.ARKitFaceTrackingRemoteConnection
+24524470de385040e04b7e7d38b1ac3c Assembly-CSharp.dll:.MoveBox
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.UnityARKitLightManager
 391d84b859f3b155fe38f54bfce79162 Assembly-CSharp.dll:.UnityPointCloudExample
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.UnityARCameraNearFar
