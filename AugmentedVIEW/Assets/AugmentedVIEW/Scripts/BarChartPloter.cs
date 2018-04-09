@@ -9,14 +9,13 @@ public class BarChartPloter : MonoBehaviour
 	public bool IsYAxis = false;
 	public bool IsZAxis = false;
 
-	public float GraphScaleFactor = 1.0f;
+	public float GraphScaleFactor = 0.25f;
 
 	private DataProvider _dataProvider;
 	private ITraceDescriptor _traceDescriptor;
 
 
-	private float _previousDataValue = 0.0f;
-	private float _delta; // Change in the previous point
+	private float _dataValue = 0.0f;
 
 	private Vector3 _initialPosition;
 
@@ -58,38 +57,35 @@ public class BarChartPloter : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (_delta == 0.0f)
-			return; // No change since last frame render, so drop out.
-		
-		var halfDelta = _delta / 2; // half because the center point is in the middle of the cube
+		var autoScaleX = transform.localScale.x;
+		var autoScaleY = transform.localScale.y;
+		var autoScaleZ = transform.localScale.z;
+
 		if (IsXAxis) {
 			transform.position = new Vector3 (
-				_initialPosition.x + halfDelta,
+				_dataValue * 0.5f,
 				_initialPosition.y,
 				_initialPosition.z
 			);
 
-			transform.localScale += new Vector3(_delta, 0, 0);
+			transform.localScale = new Vector3(_dataValue, autoScaleY, autoScaleZ);
 		} else if (IsYAxis) {
 			transform.position = new Vector3 (
 				_initialPosition.x,
-				_initialPosition.y + halfDelta,
+				_dataValue * 0.5f,
 				_initialPosition.z
 			);
 
-			transform.localScale += new Vector3(0, _delta, 0);
+			transform.localScale = new Vector3(autoScaleX, _dataValue, autoScaleZ);
 		} else if (IsZAxis) {
 			transform.position = new Vector3 (
 				_initialPosition.x,
 				_initialPosition.y,
-				_initialPosition.z + halfDelta
+				_dataValue * 0.5f
 			);
 
-			transform.localScale += new Vector3(0, 0, _delta);
+			transform.localScale = new Vector3(autoScaleX, autoScaleY, _dataValue);
 		}
-
-		// reset delta to show we used its value
-		_delta = 0.0f;
 	}
 
 	void OnDestroy() {
@@ -105,9 +101,8 @@ public class BarChartPloter : MonoBehaviour
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
 			if (channelIndex == _traceDescriptor.Channel) {
 				//Debug.Log ("X: " + newData);
-				var newDataPoint = data.values [channelIndex] * GraphScaleFactor;
-				_delta = _previousDataValue - newDataPoint;
-				_previousDataValue = newDataPoint;
+				
+				_dataValue = data.values [channelIndex] * GraphScaleFactor;
 			}
 		}
 	}

@@ -69,7 +69,11 @@ public class GraphPositioner : MonoBehaviour
 	{
 		// Update this before updating the positioner location or checking for a user press
 		center = new Vector3(Screen.width/2, Screen.height/2, positionerDistance);
-		UpdatePositionerLocation ();
+		#if UNITY_EDITOR
+		UpdatePositionerLocationUnity();
+		#else
+		UpdatePositionerLocationIOS ();
+		#endif
 		CheckForUserPress ();
 	}
 
@@ -110,7 +114,7 @@ public class GraphPositioner : MonoBehaviour
 	/// Updates the positioner location based on where the center of the screen is pointing.  If
 	/// it is not pointing at a horizontal plane, then the state is set to finding plane.
 	/// </summary>
-	private void UpdatePositionerLocation()
+	private void UpdatePositionerLocationIOS()
 	{
 		status.color = Color.red;
 		status.fontSize= 40;
@@ -137,6 +141,32 @@ public class GraphPositioner : MonoBehaviour
 				status.text = "Found plane";
 				return;
 			}
+		}
+		status.text = "Nothing found in center of screen";
+
+		//if you got here, we have not found a plane, so if camera is facing below horizon, display the focus "finding" square
+		PositionerNotOnPlane();
+	}
+
+	/// <summary>
+	/// Updates the positioner location based on where the center of the screen is pointing.  If
+	/// it is not pointing at a horizontal plane, then the state is set to finding plane.
+	/// </summary>
+	private void UpdatePositionerLocationUnity()
+	{
+		status.color = Color.red;
+		status.fontSize= 40;
+
+		Ray ray = Camera.main.ScreenPointToRay (center);
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit, maxRayDistance, collisionLayerMask))
+		{
+			hitPosition = hit.point;
+			hitRotation = hit.transform.rotation;
+
+			PositionerOnPlane ();
+			status.text = "Found plane";
+			return;
 		}
 		status.text = "Nothing found in center of screen";
 
