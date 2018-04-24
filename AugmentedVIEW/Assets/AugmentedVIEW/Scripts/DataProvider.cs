@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text.RegularExpressions;
 using System;
+using System.Text;
 
 public class DataProvider : MonoBehaviour
 {
@@ -36,8 +37,10 @@ public class DataProvider : MonoBehaviour
 	private IEnumerator GetNewData()
 	{
 		while (true) {
-			using (UnityWebRequest request = UnityWebRequest.Get ("http://" + _ipAddress + ":80/api/channeldata/currentvalues")) {
+			//using (UnityWebRequest request = UnityWebRequest.Get ("http://" + _ipAddress + ":80/api/channeldata/currentvalues")) {
+			using (UnityWebRequest request = UnityWebRequest.Get ("http://" + _ipAddress + ":80/api/channeldata/latest-data?n-pts=1000")) {
 				request.chunkedTransfer = false;
+				float[] dataPoints = new float[1000]; // Only get the last 100 samples. This may change.
 
 				yield return request.SendWebRequest ();
 				if (request.isHttpError || request.isNetworkError) {
@@ -46,8 +49,32 @@ public class DataProvider : MonoBehaviour
 					if (request.isDone) {
 						string data = System.Text.Encoding.UTF8.GetString (request.downloadHandler.data);
 						//Debug.Log ("Data: " + data);
-						var parsedData = IOData.CreateFromJSON (data);
-						var dataUpdatedEventArgs = new DataUpdatedEventArgs (parsedData);
+						var parsedData = RootObject.CreateFromJSON(data);
+						var channelCount = parsedData.channels.Count;
+
+						var ioData = new IOData();
+						ioData.values = new List<float>(channelCount);
+
+						for (var channelIndex = 0; channelIndex < channelCount; channelIndex++) {
+							ioData.values.Add (0.0f);
+							var hiString = parsedData.channels [channelIndex].hi;
+							// Only proceed if we have data for this channel
+							if (hiString != string.Empty) {
+								// Convert from a string to a float array
+								byte[] byteArray = Convert.FromBase64String(hiString);//ASCIIEncoding.ASCII.GetBytes (hiString.Substring(0, dataPoints.Length * sizeof(float)));
+								Buffer.BlockCopy (byteArray, 0, dataPoints, 0, dataPoints.Length * sizeof(float));
+								float maxValue = float.MinValue;
+								// Find the maximum value in the data
+								foreach (var currentValue in dataPoints) {
+									if (currentValue > maxValue)
+										maxValue = currentValue;
+								}
+								ioData.values[channelIndex] = maxValue;
+
+							}
+						}
+
+						var dataUpdatedEventArgs = new DataUpdatedEventArgs (ioData);
 						OnNewDataAvailable (dataUpdatedEventArgs);
 					}
 				}
@@ -90,14 +117,29 @@ public class DataProvider : MonoBehaviour
 }
 
 //https://docs.unity3d.com/ScriptReference/JsonUtility.FromJson.html
-[System.Serializable]
 public class IOData
 {
-	public List<float> values;
+	public List<float> values { get; set; }
+}
 
-	public static IOData CreateFromJSON(string jsonString)
+[System.Serializable]
+public class Channel
+{
+	public string lo;
+	public string hi;
+}
+
+[System.Serializable]
+public class RootObject
+{
+	public int sampleRate;
+	public double samplesPerPt;
+	public double firstTime;
+	public List<Channel> channels;
+
+	public static RootObject CreateFromJSON(string jsonString)
 	{
-		return JsonUtility.FromJson<IOData> (jsonString);
+		return JsonUtility.FromJson<RootObject> (jsonString);
 	}
 }
 

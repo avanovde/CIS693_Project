@@ -37,7 +37,7 @@ public class BarChartPloter : MonoBehaviour
 		// Set up which traces we want data from
 		var tracesAvailable = _dataProvider.AvailableTraces;
 		foreach (var currentTrace in tracesAvailable) {
-			if (currentTrace.Channel == Channel)
+			if (currentTrace.ChannelIndex == Channel)
 				_traceDescriptor = currentTrace;
 		}
 
@@ -99,7 +99,7 @@ public class BarChartPloter : MonoBehaviour
 		var data = e.Data;
 
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
-			if (channelIndex == _traceDescriptor.Channel) {
+			if (channelIndex == _traceDescriptor.ChannelIndex) {
 				//Debug.Log ("X: " + newData);
 				
 				_dataValue = data.values [channelIndex] * GraphScaleFactor;

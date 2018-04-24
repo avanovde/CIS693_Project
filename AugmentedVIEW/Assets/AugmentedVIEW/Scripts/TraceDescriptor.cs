@@ -4,14 +4,14 @@
 		int channel,
 		DataType dataType)
 	{
-		Channel = channel;
+		ChannelIndex = channel;
 		TraceDataType = dataType;
 	}
 
 	#region ITraceDescriptor implementation
 
 	// Index of the channel on the IOBox
-	public int Channel { get; }
+	public int ChannelIndex { get; }
 	// Type of data belonging to the particular trace
 	public DataType TraceDataType { get; }
 

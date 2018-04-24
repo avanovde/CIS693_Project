@@ -74,13 +74,13 @@ public class MoveBox : MonoBehaviour
 		var data = e.Data;
 
 		for (int channelIndex = 0; channelIndex < data.values.Count; channelIndex++) {
-			if ( channelIndex == XTraceDescriptor.Channel) {
+			if ( channelIndex == XTraceDescriptor.ChannelIndex) {
 				//Debug.Log ("X: " + data.values[channelIndex]);
 				_xValue = data.values[channelIndex] * GraphScaleFactor;
-			} else if (channelIndex == YTraceDescriptor.Channel) {
+			} else if (channelIndex == YTraceDescriptor.ChannelIndex) {
 				//Debug.Log ("Y: " + data.values[channelIndex]);
 				_yValue = data.values[channelIndex] * GraphScaleFactor;
-			} else if (channelIndex == ZTraceDescriptor.Channel) {
+			} else if (channelIndex == ZTraceDescriptor.ChannelIndex) {
 				//Debug.Log ("Z: " + data.values[channelIndex]);
 				_zValue = data.values[channelIndex] * GraphScaleFactor;
 			}
